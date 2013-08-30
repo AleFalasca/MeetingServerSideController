@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset=UTF-8>
+        <title>Tomcat WebSocket Chat</title>
+        <script>
+            var ws = new WebSocket("ws://localhost:8080/RietiMeeting/WsChatServlet");
+            ws.onopen = function(){
+            };
+            ws.onmessage = function(message){
+                //document.getElementById("chatlog").textContent += message.data + "\n";
+                document.getElementById("resutlTable").innerHTML=message.data;
+            };
+            function postToServer(){
+                ws.send(document.getElementById("msg").value);
+                document.getElementById("msg").value = "";
+            }
+            function closeConnect(){
+                ws.close();
+            }
+        </script>
+    </head>
+    <body>
+        <textarea id="chatlog" readonly></textarea><br/>
+        <!--<input id="msg" type="text" />-->
+        <select id="msg">
+			<option value="Women Hammer-Qualification" >Women Hammer-Qualification</option>
+			<option value="Men Hammer-Qualification" >Men Hammer-Qualification</option>
+			<option value="Hammer Throw" >Hammer Throw</option>
+			<option value="Pole Vault" >Pole Vault</option>
+			<option value="400m" >400m</option>
+			<option value="High Jump" >High Jump</option>
+			<option value="100m" >100m</option>
+			<option value="3000m" >3000m</option>
+			<option value="1500m" >1500m</option>
+			<option value="400mH" >400mH</option>
+			<option value="Shot Put" >Shot Put</option>
+			<option value="800m" >800m</option>
+			<option value="Hammer Throw" >Hammer Throw</option>
+			<option value="400mH" >400mH</option>
+			<option value="1500m" >1500m</option>
+			<option value="100m" >100m</option>
+			<option value="Triple Jump" >Triple Jump</option>
+			<option value="800m" >800m</option>
+			<option value="400m" >400m</option>
+			<option value="3000m" >3000m</option>
+			<option value="Open Client." >Open Client.</option>        
+        </select>
+        
+        
+        <button type="submit" id="sendButton" onClick="postToServer()">Send!</button>
+        <button type="submit" id="sendButton" onClick="closeConnect()">End</button>
+        
+        <div id="resutlTable"></div>
+    </body>
+</html>
