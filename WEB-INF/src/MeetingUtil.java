@@ -17,6 +17,7 @@ public class MeetingUtil {
 	
 	public MeetingUtil() {
 		initMap();
+		startList();
 	}
 	public String returnTable () throws IOException {
 		HashMap<String, String> tabs = new HashMap<String, String>();
@@ -29,9 +30,6 @@ public class MeetingUtil {
 				Elements table = doc2.select("#datatable");
 				String valore = table.html();		
 				tabs.put(chiave, valore);
-
-	  		
-	  		
 		}
 		Gson gson = new Gson();
 		String json = gson.toJson(tabs);
@@ -57,7 +55,7 @@ public class MeetingUtil {
 					}
 					
 					couple.put(gender +"-"+t.text(), t.childNode(0).attr("abs:href"));
-					
+
 				}
 	        couple.remove("Man-Overall Result Summary (PDF)");
 	    
@@ -65,6 +63,21 @@ public class MeetingUtil {
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-			}
+			}					
+	}
+private void startList(){
+	for (String s: couple.keySet()){
+		HashMap<String, String> couple2 = couple;
+		System.out.println(couple2);
+		String url = couple2.get(s);
+		System.out.println(url);
+		char [] urlC = url.toCharArray();
+		urlC[55] = 's';
+		urlC[56] = 'h';
+		String urlS = new String(urlC);
+		System.out.println(urlS);
+		couple.put("Start-"+url, urlS);
 	}
 }
+}
+
