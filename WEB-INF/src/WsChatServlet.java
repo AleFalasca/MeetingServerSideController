@@ -49,7 +49,7 @@ public class WsChatServlet extends WebSocketServlet{
                 CharBuffer buffer = CharBuffer.wrap(m.toCharArray()); //
                 mmib.myoutbound.writeTextMessage(buffer);
                 mmib.myoutbound.flush();
-               System.out.println(buffer);
+                System.out.println(buffer.toString());
             }
         }
  

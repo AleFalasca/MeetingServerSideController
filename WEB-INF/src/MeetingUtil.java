@@ -22,13 +22,16 @@ public class MeetingUtil {
 	public String returnTable () throws IOException {
 		HashMap<String, String> tabs = new HashMap<String, String>();
 		for (String chiave: couple.keySet()){
+			System.out.println(chiave);
 			String s = couple.get(chiave);
 			//System.out.println(s);
-			System.out.println(chiave);
+			//System.out.println(chiave);
 			Document doc2;			
 				doc2 = Jsoup.connect(s).get();
-				Elements table = doc2.select("#datatable");
-				String valore = table.html();		
+				Elements table = doc2.select("#datatableframe");
+				table.select("#buttontable").remove();
+				String valore = table.html();
+				//System.out.println(valore);
 				tabs.put(chiave, valore);
 		}
 		Gson gson = new Gson();
@@ -44,7 +47,7 @@ public class MeetingUtil {
 			try {
 				doc = Jsoup
 				        .connect(
-				                "http://www.rietimeeting.com/wp-content/uploads/results/timetable.html")
+				                "http://www.rietimeeting.com/results/timetable.html")
 				        .get();
 				Elements tables = doc.select("#timetabledata");
 				String gender="Women";
@@ -65,19 +68,26 @@ public class MeetingUtil {
 				e.printStackTrace();
 			}					
 	}
-private void startList(){
-	for (String s: couple.keySet()){
+	private void startList(){
+		HashMap<String, String> coupleTmp = new HashMap<String, String>();
 		HashMap<String, String> couple2 = couple;
-		System.out.println(couple2);
+		for (String s: couple.keySet()){
 		String url = couple2.get(s);
-		System.out.println(url);
+		System.out.println(url.length());
 		char [] urlC = url.toCharArray();
-		urlC[55] = 's';
-		urlC[56] = 'h';
+		urlC[36] = 's';
+		urlC[37] = 'h';
 		String urlS = new String(urlC);
 		System.out.println(urlS);
-		couple.put("Start-"+url, urlS);
-	}
-}
-}
+		//System.out.println(urlS);
+		coupleTmp.put("Start-"+s, urlS);
+		
+		System.out.println(coupleTmp);
+		}
+		couple.putAll(coupleTmp);
+		couple.remove("Start-Women-Women Hammer-Qualification");
+		couple.remove("Start-Women-Men Hammer-Qualification");
+		}
+		}
+
 
